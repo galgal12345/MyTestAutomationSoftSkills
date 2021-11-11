@@ -1,13 +1,13 @@
 package lesson13;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Description;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 
@@ -25,7 +25,7 @@ import org.testng.annotations.Test;
  * <p>
  * לקיחה תוצאה מהמסך והדפסה
  **/
-
+@Listeners(lesson13.Listeners.class)
 public class SuperCalculatorVerOne {
 
     WebDriver webDriver;
@@ -37,7 +37,8 @@ public class SuperCalculatorVerOne {
         webDriver.get("http://juliemr.github.io/protractor-demo/");
     }
 
-    @Test
+    @Test(description = "checked if i can mult up to 3 ")
+    @Description("mult is like this 1*1, 1*2, 1*3")
     public void testMultiplicationTable() throws InterruptedException {
 
 
@@ -59,7 +60,8 @@ public class SuperCalculatorVerOne {
 
         }
     }
-    @Test
+    @Test(description = "checked if i can mult up to 9 ")
+    @Description("mult is like this 1*1, 1*2, 1*3, 2*1, 2*2, 2*3, and so on")
     public void testMultiplicationTableToNine() throws InterruptedException {
         webDriver.findElement(By.tagName("select")).click();
         webDriver.findElement(By.xpath("//option[4]")).click();
