@@ -3,18 +3,11 @@ package lesson14;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import java.util.List;
-
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 public class DataDrivenTesting {
 
@@ -24,28 +17,33 @@ public class DataDrivenTesting {
     public void startSession(){
         WebDriverManager.chromedriver().setup();
         webDriver = new ChromeDriver();
-        webDriver.get("https://www.wikipedia.org/");
-    }
-
-    @Test(dataProvider = "data-provider")
-    public void testOne(String url, String expectedResult){
-        //todo:continue!!!!!!!!!!!!
-        webDriver.get(url);
-        assertEquals(webDriver.findElement(By.id("firstHeading")).getText(), expectedResult);
+        webDriver.get("http://wikipedia.org/");
 
     }
 
-    @DataProvider(name="data-provider")
-    public Object[][] getDataObject(){
-        return new Object[][] {
-                {"https://www.wikipedia.org/"},{"Israel"},
-                {"https://www.wikipedia.org/"},{"Automation"},
-                {"https://www.wikipedia.org/"},{"BlahBlah"}
-        };
+    @Test(priority = 1, dataProvider = "data-provider" ,dataProviderClass = StaticProvider.class)
+    public void testOne(String key, String expectedResult){
+
+        //sends keys into input filed
+        webDriver.findElement(By.id("searchInput")).sendKeys(key);
+
+        //clicking the search btn
+        webDriver.findElement(By.xpath("//*[@id='search-form']/fieldset/button/i")).click();
+
+        //checking if the first heading equals to the expected result
+        assertEquals(webDriver.findElement(By.id("firstHeading")).getText(), expectedResult, "Test One Failed");
+
+        //entering wiki again
+        webDriver.get("http://wikipedia.org/");
+
     }
 
     @AfterClass
     public void endSession() {
         webDriver.quit();
     }
+
+
+
+
 }

@@ -41,21 +41,20 @@ public class SuperCalculatorVerTwo {
     public void startSession(){
         WebDriverManager.chromedriver().setup();
         webDriver = new ChromeDriver();
+        webDriver.get("https://www.random.org/");
 
     }
 
-    @Test
+    @Test(priority = 1)
     public void testRndOneToTen() throws InterruptedException {
 
-        webDriver.get("https://www.random.org/");
+
         WebElement ifrm = webDriver.findElement(By.cssSelector("iframe[src='https://www.random.org/widgets/integers/iframe.php?title=True+Random+Number+Generator&buttontxt=Generate&width=160&height=230&border=on&bgcolor=%23FFFFFF&txtcolor=%23777777&altbgcolor=%23CCCCFFA&alttxtcolor=%23000000&defaultmin=1&defaultmax=100&fixed=off']"));
         webDriver.switchTo().frame(ifrm);
         webDriver.findElement(By.xpath("//input[contains(@id,'max')]")).clear();
         webDriver.findElement(By.xpath("//input[contains(@id,'max')]")).sendKeys("10");
         webDriver.findElement(By.xpath("//input[contains(@id,'button')]")).click();
-        Thread.sleep(3000);
         String s = webDriver.findElement(By.xpath("//span[contains(@id,'result')]/center/span[1]")).getText();
-        Thread.sleep(3000);
         testUsingNum(s);
 
     }
@@ -63,13 +62,13 @@ public class SuperCalculatorVerTwo {
     @Step
     public void testUsingNum(String s) throws InterruptedException {
         int num = Integer.parseInt(s);
-
+        webDriver.get("http://juliemr.github.io/protractor-demo/");
         String rightFieldsNumToStr;
         String leftFieldsNumToStr;
 
         //todo:continue!!!!!!
         System.out.println("testMultiplicationTable");
-        for (int j = 3; j > num; j--) {
+        for (int j = 3; j > 0; j--) {
             rightFieldsNumToStr = "" + 1;
             leftFieldsNumToStr = "" + j;
             webDriver.findElement(By.xpath("//input[1]")).sendKeys(rightFieldsNumToStr);
