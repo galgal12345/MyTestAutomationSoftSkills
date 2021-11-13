@@ -8,13 +8,9 @@ public class StaticProvider {
     @DataProvider(name = "data-provider")
     public static Object[][] createData() {
 
-        return new Object[][]{
+        return CSVDataProvider.getCSVData("C:\\Users\\GIL\\IdeaProjects\\TestAutomtion\\Selenium\\Comma-separated-values-files\\data.csv");
 
-                {"Israel", "Israel"},
-                {"Automation", "Automation"},
-                {"BlahBlah", "Search results"}
-        };
     }
 
-
 }
+

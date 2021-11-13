@@ -24,16 +24,9 @@ public class DataDrivenTesting {
     @Test(priority = 1, dataProvider = "data-provider" ,dataProviderClass = StaticProvider.class)
     public void testOne(String key, String expectedResult){
 
-        //sends keys into input filed
         webDriver.findElement(By.id("searchInput")).sendKeys(key);
-
-        //clicking the search btn
         webDriver.findElement(By.xpath("//*[@id='search-form']/fieldset/button/i")).click();
-
-        //checking if the first heading equals to the expected result
         assertEquals(webDriver.findElement(By.id("firstHeading")).getText(), expectedResult, "Test One Failed");
-
-        //entering wiki again
         webDriver.get("http://wikipedia.org/");
 
     }
