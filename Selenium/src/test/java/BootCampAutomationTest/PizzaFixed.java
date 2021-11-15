@@ -1,6 +1,5 @@
 package BootCampAutomationTest;
 
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -10,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -17,6 +17,7 @@ import java.util.List;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+@Listeners(tools.Listeners.class)
 public class PizzaFixed {
     WebDriver webDriver;
 
@@ -32,7 +33,7 @@ public class PizzaFixed {
 
         String expectedResult = "$7.50";
         System.out.println(webDriver.findElement(By.xpath("//*[@id='field_5_2']/div/span")).getText());
-        assertEquals(webDriver.findElement(By.xpath("//*[@id='field_5_2']/div/span")).getText(),expectedResult, "Test Failed: first price is not $7.50");
+        assertEquals(webDriver.findElement(By.xpath("//*[@id='field_5_2']/div/span")).getText(),expectedResult, "Test One Failed: first price is not $7.50");
 
     }
 
@@ -52,7 +53,7 @@ public class PizzaFixed {
             }
         }
         String dropDownExpectedResult = "$10.50";
-        assertEquals(webDriver.findElement(By.xpath("//*[@id='field_5_2']/div/span")).getText(),dropDownExpectedResult, "Test Failed the price is not 10.50");
+        assertEquals(webDriver.findElement(By.xpath("//*[@id='field_5_2']/div/span")).getText(),dropDownExpectedResult, "Test Two Failed the price is not 10.50");
     }
     @Test(priority = 3)
     public void testThree()  {
@@ -65,10 +66,13 @@ public class PizzaFixed {
         webDriver.findElement(By.id("input_5_20")).sendKeys(s);
         webDriver.findElement(By.id("gform_submit_button_5")).click();
 
+        String popupExpectedResult = "Gil Almuly 088-234";
         Alert popup = webDriver.switchTo().alert();
-        System.out.println(popup.getText());
-        assertEquals(popup.getText(), "Gil Almuly 088-234");
+        String popupText = popup.getText();
+        System.out.println(popupText);
         popup.accept();
+        assertEquals(popupText, popupExpectedResult, "Test Three Failed: Expected Result is not Equal To Actual");
+
 
     }
 

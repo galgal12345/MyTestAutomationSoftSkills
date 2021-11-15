@@ -8,7 +8,7 @@ public class StaticProvider {
     @DataProvider(name = "data-provider")
     public static Object[][] createData() {
 
-        return CSVDataProvider.getCSVData("C:\\Users\\GIL\\IdeaProjects\\TestAutomtion\\Selenium\\Comma-separated-values-files\\data.csv");
+        return CSVDataProvider.getCSVData("C:\\Users\\GIL\\IdeaProjects\\TestAutomtion\\Selenium\\csv-files\\data.csv");
 
     }
 

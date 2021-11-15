@@ -10,6 +10,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**מקס -> לחצן עם כיוון למטה לחץ עליו 90 פעם עד שתגיע ל 10
  ואז לוחצים על לחצן ה GO
 
@@ -54,30 +57,42 @@ public class SuperCalculatorVerTwo {
         webDriver.findElement(By.xpath("//input[contains(@id,'max')]")).clear();
         webDriver.findElement(By.xpath("//input[contains(@id,'max')]")).sendKeys("10");
         webDriver.findElement(By.xpath("//input[contains(@id,'button')]")).click();
+        Thread.sleep(3000);
         String s = webDriver.findElement(By.xpath("//span[contains(@id,'result')]/center/span[1]")).getText();
+        System.out.println("My Rnd: " + s);
         testUsingNum(s);
 
     }
 
     @Step
     public void testUsingNum(String s) throws InterruptedException {
+
         int num = Integer.parseInt(s);
+        List<String> sumOfMutRnd = new ArrayList<>();
         webDriver.get("http://juliemr.github.io/protractor-demo/");
+
+        webDriver.findElement(By.tagName("select")).click();
+        webDriver.findElement(By.xpath("//option[4]")).click();
+
         String rightFieldsNumToStr;
         String leftFieldsNumToStr;
 
-        //todo:continue!!!!!!
-        System.out.println("testMultiplicationTable");
-        for (int j = 3; j > 0; j--) {
-            rightFieldsNumToStr = "" + 1;
+
+        for (int j = num-1; j > 0; j--) {
+            rightFieldsNumToStr = "" + num;
             leftFieldsNumToStr = "" + j;
             webDriver.findElement(By.xpath("//input[1]")).sendKeys(rightFieldsNumToStr);
             webDriver.findElement(By.xpath("//input[2]")).sendKeys(leftFieldsNumToStr);
             webDriver.findElement(By.id("gobutton")).click();
             Thread.sleep(3000);
-            System.out.println(webDriver.findElement(By.tagName("h2")).getText());
-
+            sumOfMutRnd.add(webDriver.findElement(By.tagName("h2")).getText());
         }
+
+        int sum = 0;
+        for(int i = 0 ; i < sumOfMutRnd.size() ; i++){
+            sum += Integer.parseInt(sumOfMutRnd.get(i));
+        }
+        System.out.println("the Sum Of Mutable Rnd number: " + sum);
     }
 
     @AfterClass

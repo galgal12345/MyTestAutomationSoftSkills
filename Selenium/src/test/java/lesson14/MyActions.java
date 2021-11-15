@@ -60,9 +60,11 @@ public class MyActions {
     public void testFour(){
 
         String mouseHoverExpectedResult = "background-color: rgb(255, 255, 0);";
+
         Actions actions = new Actions(webDriver);
         WebElement elem1 = webDriver.findElement(By.id("mouse_hover"));
         actions.moveToElement(elem1).build().perform();
+
         String backGroundColor = webDriver.findElement(By.id("mouse_hover")).getAttribute("style");
         System.out.println(backGroundColor);
         assertEquals(backGroundColor, mouseHoverExpectedResult, "Test Four Failed");
