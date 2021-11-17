@@ -46,10 +46,10 @@ public class Todos {
 
     WebDriver webDriver;
 
-    String[] tripArr = {"Passport", "Phone charger / portable phone charger", "Euros", "EU adapters"
-                        , "Flip flops (for the hostel bathrooms)", "Water bottle", "Headphones", "Travel Blanket"
-                        ,"Travel Pillow", "Eye Mask", "Earplugs" , "Tissues", "Snacks", "Empty Water Bottle"
-                        ,"Camera", "Passport/Visa/ID", "Gum", "Cash", "Credit/ATM cards", "Insurance Cards"};
+    String[] tripArr = {"Passport", "Phone_charger", "Euros", "EU_adapters"
+                        , "Flip_flops", "Water_bottle", "Headphones", "Travel_Blanket"
+                        ,"Travel_Pillow", "Eye_Mask", "Earplugs" , "Tissues", "Snacks", "Empty_Water_Bottle"
+                        ,"Camera", "Passport/Visa/ID", "Gum", "Cash", "Credit/ATM_cards", "Insurance_Cards"};
 
 
     @BeforeClass
@@ -93,25 +93,61 @@ public class Todos {
     public void testEditItemFromToDoList(){
 
         WebElement item ;
-        WebElement dClickItem;
 
         Actions action = new Actions(webDriver);
         List<WebElement> itemsList= webDriver.findElements(By.xpath("//section/ul/li"));
         for (int i = 0 ; i < itemsList.size() ; i+=2){
 
             item = itemsList.get(i);
-            dClickItem = itemsList.get(i).findElement(By.tagName("label"));
-
             action.moveToElement(item).build().perform();
-            action.doubleClick(dClickItem).build().perform();
-            item.clear();
+            action.doubleClick(item).build().perform();
+            action.contextClick(item).sendKeys(Keys.BACK_SPACE)
+                                    .sendKeys("------------")
+                                    .sendKeys(Keys.RETURN).build().perform();
+
         }
+    }
+
+    @Test(priority = 4)
+    public void testCheckToCompleted() {
+        Actions action = new Actions(webDriver);
+        List<WebElement> itemsList= webDriver.findElements(By.xpath("//section/ul/li"));
+        for (int i = 0 ; i < itemsList.size() ; i+=2)
+            action.moveToElement(itemsList.get(i)).click(itemsList.get(i).findElement(By.className("toggle"))).build().perform();
+    }
+
+    @Test(priority = 5)
+    public void testFilterMissions() {
+
+        int countAll = 0;
+        int countActive = 0;
+        int countCompleted = 0;
+
+        List<WebElement> itemsList= webDriver.findElements(By.xpath("//section/ul/li"));
+
+        for (int i = 0; i < itemsList.size() ; i+=2)
+            if (itemsList.get(i).findElement(By.xpath("//section/ul/li")).isDisplayed())
+                countAll++;
+        System.out.println(countAll);
+
+        webDriver.findElement(By.xpath("//footer/ul/li[2]/a")).click();
+        for (int i = 0; i < itemsList.size() ; i+=2)
+            if (itemsList.get(i).findElement(By.xpath("//section/ul/li")).isDisplayed())
+                countActive++;
+        System.out.println(countActive);
+
+        webDriver.findElement(By.xpath("/html/body/section/div/footer/ul/li[3]/a")).click();
+        for (int i = 0; i < itemsList.size() ; i+=2)
+            if (itemsList.get(i).findElement(By.xpath("//section/ul/li")).isDisplayed())
+                countCompleted++;
+        System.out.println(countCompleted);
 
     }
+
 
     @AfterClass
     public void endSession() throws InterruptedException {
         Thread.sleep(3000);
-        webDriver.quit();
+        //webDriver.quit();
     }
 }
