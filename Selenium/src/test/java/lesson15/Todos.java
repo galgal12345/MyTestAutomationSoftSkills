@@ -136,7 +136,7 @@ public class Todos {
                 countActive++;
         System.out.println(countActive);
 
-        webDriver.findElement(By.xpath("/html/body/section/div/footer/ul/li[3]/a")).click();
+        webDriver.findElement(By.xpath("//footer/ul/li[3]/a")).click();
         for (int i = 0; i < itemsList.size() ; i+=2)
             if (itemsList.get(i).findElement(By.xpath("//section/ul/li")).isDisplayed())
                 countCompleted++;
@@ -148,6 +148,6 @@ public class Todos {
     @AfterClass
     public void endSession() throws InterruptedException {
         Thread.sleep(3000);
-        //webDriver.quit();
+        webDriver.quit();
     }
 }

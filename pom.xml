@@ -11,6 +11,7 @@
     <modules>
         <module>Selenium</module>
         <module>Appium</module>
+        <module>RestApi</module>
     </modules>
 
     <properties>

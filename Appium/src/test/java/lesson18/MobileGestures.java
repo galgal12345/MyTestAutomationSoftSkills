@@ -50,15 +50,19 @@ public class MobileGestures {
         Tools.regularTap(mobileElementDataWidget,driver);
         Tools.regularTap(mobileElementInline,driver);
 
+        //todo----------------
         MobileElement dragHoursStart = driver.findElement(By.xpath("//*[@contentDescription='12']"));
         MobileElement dropHoursFinish = driver.findElement(By.xpath("//*[@contentDescription='9']"));
 
         Tools.dragAndDropWithDuration(dragHoursStart, dropHoursFinish,driver);
 
+
         MobileElement dragMinutesStart = driver.findElement(By.xpath("//*[@contentDescription='15']"));
         MobileElement dropMinutesFinish = driver.findElement(By.xpath("//*[@contentDescription='45']"));
 
         Tools.dragAndDropWithDuration(dragMinutesStart, dropMinutesFinish,driver);
+        //todo----------------
+
 
         String expectedHour = "9";
         String expectedMinutes = "45";
@@ -84,12 +88,14 @@ public class MobileGestures {
         Tools.regularTap(mobileElementCustomAdapter,driver);
 
         Tools.longPressWithDuration(driver.findElement(By.xpath("//*[@text='People Names']")),driver,2);
+
         MobileElement mobileElementSimpleMenu = driver.findElement(By.xpath("//*[@text='People Names']"));
 
         driver.pressKey(new KeyEvent().withKey(AndroidKey.BACK));
         Tools.regularTap(mobileElementCustomAdapter,driver);
         Tools.pressWithDuration(driver.findElement(By.xpath("//*[@text='People Names']")),driver,2);
 
+        driver.pressKey(new KeyEvent().withKey(AndroidKey.BACK));
         driver.pressKey(new KeyEvent().withKey(AndroidKey.BACK));
         Tools.regularTap(mobileElementCustomAdapter,driver);
         Tools.regularTapWithDuration(driver.findElement(By.xpath("//*[@text='People Names']")),driver,2);
