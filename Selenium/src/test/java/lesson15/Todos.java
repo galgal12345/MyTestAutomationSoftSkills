@@ -13,34 +13,6 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-/**
- * //1
- * דבר ראשון למצוא שדה טקסט של todo ולהכניס לתוכו keys
- * <p>
- * ללחוץ enter בעזרת
- * WebElement textbox = driver.findElement(By.id("idOfElement"));
- * textbox.sendKeys(Keys.ENTER);
- * //2
- * mouse hover
- * ואז click בשביל ללחוץ על האיקס למחיקה
- * <p>
- * //3
- * mouse hover לתיבת הטקסט doubleClick
- * ואז clear
- * וכתיבת משימה חדשה
- * או
- * רק clear לתיבת הטקסט
- * וכתיבת משימה חדשה
- * <p>
- * //4
- * נוסיף mouse hover  נלחץ על העיגול בשביל לסמן ✔ כ Completed
- * <p>
- * //5
- * בדיקת פילטור עם אסרט
- * <p>
- * //6
- * אם completed מחק
- **/
 
 public class Todos {
 
@@ -49,7 +21,7 @@ public class Todos {
     String[] tripArr = {"Passport", "Phone_charger", "Euros", "EU_adapters"
                         , "Flip_flops", "Water_bottle", "Headphones", "Travel_Blanket"
                         ,"Travel_Pillow", "Eye_Mask", "Earplugs" , "Tissues", "Snacks", "Empty_Water_Bottle"
-                        ,"Camera", "Passport/Visa/ID", "Gum", "Cash", "Credit/ATM_cards", "Insurance_Cards"};
+                        ,"Camera", "Passport/Visa/ID", "Gum",  "Credit/ATM_cards", "Insurance_Cards"};
 
 
     @BeforeClass
@@ -119,28 +91,35 @@ public class Todos {
     @Test(priority = 5)
     public void testFilterMissions() {
 
-        int countAll = 0;
-        int countActive = 0;
-        int countCompleted = 0;
+        WebElement dataWidget = webDriver.findElement(By.xpath("//section[@class='main']"));
+        List<WebElement> itemsAll= dataWidget.findElements(By.xpath("//section/ul/li"));
+        System.out.println(itemsAll.size());
 
-        List<WebElement> itemsList= webDriver.findElements(By.xpath("//section/ul/li"));
+        List<WebElement> itemsCompleted = dataWidget.findElements(By.xpath("//section/ul/li[@class='completed']"));
+        System.out.println(itemsCompleted.size());
 
-        for (int i = 0; i < itemsList.size() ; i+=2)
-            if (itemsList.get(i).findElement(By.xpath("//section/ul/li")).isDisplayed())
-                countAll++;
-        System.out.println(countAll);
+        System.out.println(itemsAll.size() - itemsCompleted.size());
 
-        webDriver.findElement(By.xpath("//footer/ul/li[2]/a")).click();
-        for (int i = 0; i < itemsList.size() ; i+=2)
-            if (itemsList.get(i).findElement(By.xpath("//section/ul/li")).isDisplayed())
-                countActive++;
-        System.out.println(countActive);
+    }
 
-        webDriver.findElement(By.xpath("//footer/ul/li[3]/a")).click();
-        for (int i = 0; i < itemsList.size() ; i+=2)
-            if (itemsList.get(i).findElement(By.xpath("//section/ul/li")).isDisplayed())
-                countCompleted++;
-        System.out.println(countCompleted);
+    @Test(priority = 6)
+    public void testDeleteAllCompletedMissions() throws InterruptedException {
+
+        WebElement item ;
+        WebElement destroyItem ;
+        Actions action = new Actions(webDriver);
+
+        List<WebElement> itemsList= webDriver.findElements(By.xpath("//section/ul/li[@class='completed']"));
+        for (int i = 0 ; i < itemsList.size() ; i++){
+
+            item = itemsList.get(i);
+            destroyItem = itemsList.get(i).findElement(By.className("destroy"));
+            //Thread.sleep(1000);
+            action.moveToElement(item).build().perform();
+            //Thread.sleep(1000);
+            action.click(destroyItem).build().perform();
+        }
+
 
     }
 
