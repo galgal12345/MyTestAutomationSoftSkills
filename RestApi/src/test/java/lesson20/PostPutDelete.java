@@ -83,15 +83,8 @@ public class PostPutDelete {
 
     @Test(priority = 4)
     public void testDelete() {
-        JSONObject params = new JSONObject();
-        params.put("firstName", "noam");
-        params.put("lastName", "almuly");
-        params.put("email", "almuly.gil212@gmail.com");
-        params.put("programme", "Electricity");
 
-        request.body(params.toJSONString());
         response = request.delete("/student/98");
-
         System.out.println(response.getBody().asString());
         assertEquals(response.getStatusCode(), 204);
     }
