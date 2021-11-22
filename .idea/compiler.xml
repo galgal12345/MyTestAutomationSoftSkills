@@ -6,10 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="RestApi" />
         <module name="Appium" />
         <module name="Selenium" />
+        <module name="RestApi" />
+        <module name="Desktop" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Winium" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
