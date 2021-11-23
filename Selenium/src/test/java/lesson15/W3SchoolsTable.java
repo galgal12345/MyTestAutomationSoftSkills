@@ -45,22 +45,29 @@ public class W3SchoolsTable {
     @Test(priority = 3)
     public void testGetAllCellsIntoCsvFile() throws IOException {
 
+        //מאתחל מערך ליסט
         List<String> cellsArrayList = new ArrayList<>();
+
+        //מוצא אלמנטים ומריץ ובודק טסט לבדוק שהוא מצא אלמנטים
         List<WebElement> titleCells = webDriver.findElements(By.xpath("//table[@id='customers']/tbody/tr/th"));
         List<WebElement> allOtherCells = webDriver.findElements(By.xpath("//table[@id='customers']/tbody/tr/td"));
 
+        //מכניס אלמנטים מטבלה לתוך מערך ליסט
         for (WebElement titleCell : titleCells)
             cellsArrayList.add(titleCell.getText());
 
         for (WebElement cell : allOtherCells)
             cellsArrayList.add(cell.getText());
 
+        //יוצר מערך רגיל ומכניס לו את כל האלמנטים של הליסט כי "ווריט נקסט" לא עובד עם ליסט
         String[] cellsArray = new String[cellsArrayList.size()];
         cellsArray = cellsArrayList.toArray(cellsArray);
 
+        //מגדיר מסלול מסוג מחרוזת
         String csv = "C:\\Users\\GIL\\IdeaProjects\\TestAutomtion\\Selenium\\csv-files\\cells.csv";
         CSVWriter writer = new CSVWriter(new FileWriter(csv));
 
+        //מכניס רלמנטים לקובץ "סי אס וי"
         writer.writeNext(cellsArray);
         writer.close();
 

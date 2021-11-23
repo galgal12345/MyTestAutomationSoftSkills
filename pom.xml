@@ -14,6 +14,7 @@
         <module>RestApi</module>
         <module>Winium</module>
         <module>Desktop</module>
+        <module>JavaAutomationRealTest</module>
     </modules>
 
     <properties>
